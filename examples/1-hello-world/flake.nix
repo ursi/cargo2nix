@@ -1,8 +1,6 @@
 {
   inputs = {
-    cargo2nix.url = "path:../../";
-    # Use the github URL for real packages
-    # cargo2nix.url = "github:cargo2nix/cargo2nix/master";
+    get-flake.url = "github:ursi/get-flake";
     flake-utils.url = "github:numtide/flake-utils";
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
@@ -10,7 +8,8 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=release-21.05";
   };
 
-  outputs = { self, nixpkgs, cargo2nix, flake-utils, rust-overlay, ... }:
+  outputs = { self, nixpkgs, flake-utils, get-flake, rust-overlay, ... }:
+    let cargo2nix = get-flake ../..; in
 
     # Build the output set for each default system and map system sets into
     # attributes, resulting in paths such as:
